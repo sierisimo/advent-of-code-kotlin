@@ -21,3 +21,8 @@ fun String.md5() = BigInteger(1, MessageDigest.getInstance("MD5").digest(toByteA
 fun Any?.println() = println(this)
 
 fun <T> identity(t: T) = t
+
+fun <T> stringToType(input: String, mapping: (String) -> T?): List<T> =
+    input.split(" ")
+        .filter { it.isNotBlank() }
+        .mapNotNull { mapping(it) }

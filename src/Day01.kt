@@ -30,9 +30,7 @@ private fun <T, R> List<String>.mapPartitionAndTransform(
     val left = mutableListOf<T>()
     val right = mutableListOf<T>()
     for (line in this) {
-        val nums = line.split(" ")
-            .filter(String::isNotBlank)
-            .map(mapping)
+        val nums = stringToType(line, mapping)
 
         left.add(nums[0])
         right.add(nums[1])
