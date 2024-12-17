@@ -26,3 +26,22 @@ fun <T> stringToType(input: String, mapping: (String) -> T?): List<T> =
     input.split(" ")
         .filter { it.isNotBlank() }
         .mapNotNull { mapping(it) }
+
+fun <T, R> List<T>.foldPairs(initial: R, operation: (acc: R, first: T, second: T) -> R): R {
+    if (this.size < 2) {
+        throw IllegalArgumentException("List must have at least 2 elements")
+    }
+
+    return (1 until this.size).fold(initial) { acc, index ->
+        operation(acc, this[index - 1], this[index])
+    }
+}
+
+fun <T> List<T>.eachRemoved(): List<List<T>> {
+    val result = mutableListOf<List<T>>()
+    for (i in indices) {
+        val subList = subList(0, i) + subList(i + 1, size)
+        result.add(subList)
+    }
+    return result
+}
